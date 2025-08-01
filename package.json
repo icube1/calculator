@@ -11,7 +11,9 @@
     "lint": "expo lint"
   },
   "dependencies": {
+    "@expo/metro-runtime": "~5.0.4",
     "@expo/vector-icons": "^14.1.0",
+    "@expo/webpack-config": "^19.0.1",
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-navigation/bottom-tabs": "^7.3.10",
     "@react-navigation/elements": "^2.3.8",
@@ -41,8 +43,7 @@
     "react-native-webview": "13.13.5",
     "react-redux": "^9.2.0",
     "redux": "^5.0.1",
-    "redux-persist": "^6.0.0",
-    "@expo/metro-runtime": "~5.0.4"
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
