@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 interface CalculatorHistoryProps {
@@ -16,14 +16,15 @@ export function CalculatorHistory({ history, onClear, animatedHistoryBlockStyle,
     <Animated.View style={[styles.historyContainer, animatedHistoryBlockStyle, animatedHistoryStyle]}>
       <View style={styles.historyHeader}>
         <Animated.Text style={[styles.historyTitle, animatedTextStyle]}>History</Animated.Text>
-        <TouchableOpacity onPress={onClear} style={styles.clearHistoryButton}>
+        <Pressable onPress={onClear} style={styles.clearHistoryButton} hitSlop={16}>
           <Animated.Text style={[styles.clearHistoryText, animatedTextStyle]}>Clear</Animated.Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
-      <ScrollView style={styles.historyList}>
-        {history.map((item, idx) => (
+      <FlatList 
+        data={history}
+        renderItem={({item, index}) => (
           <Animated.Text
-            key={idx}
+            key={index}
             style={[
               styles.historyItem,
               { color: theme === 'dark' ? '#c8d6e5' : '#222f3e' },
@@ -31,8 +32,10 @@ export function CalculatorHistory({ history, onClear, animatedHistoryBlockStyle,
           >
             {item}
           </Animated.Text>
-        ))}
-      </ScrollView>
+        )}
+        // contentContainerStyle={styles.historyList}
+        style={styles.historyList}
+      />
     </Animated.View>
   );
 }

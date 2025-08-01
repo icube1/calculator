@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 interface ThemeSwitchProps {
@@ -11,15 +11,14 @@ interface ThemeSwitchProps {
 export function ThemeSwitch({ theme, onToggle, animatedTextStyle }: ThemeSwitchProps) {
   return (
     <View style={styles.themeSwitchRow}>
-      <TouchableOpacity
+      <Pressable
         onPress={onToggle}
         style={styles.themeSwitchButton}
-        activeOpacity={0.7}
       >
         <Animated.Text style={[styles.themeSwitchText, animatedTextStyle]}>
           {theme === 'dark' ? '🌙 Dark' : '☀️ Light'}
         </Animated.Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 }

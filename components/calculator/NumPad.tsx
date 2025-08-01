@@ -51,6 +51,14 @@ export function NumPad({ buttons, onButtonPress, themeValue, theme }: NumPadProp
     padding: 8,
     marginTop: 8,
   }));
+  const numButtonBgStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      themeValue.value,
+      [0, 1],
+      ['#f5f6fa', '#34495e']
+    ),
+  }));
+
   return (
     <Animated.View style={[styles.buttonGrid, animatedNumPadStyle]}>
       <View style={styles.buttonRow}>
@@ -61,13 +69,6 @@ export function NumPad({ buttons, onButtonPress, themeValue, theme }: NumPadProp
         <View key={i} style={styles.buttonRow}>
           {row.map((label) => {
             const isOp = ['+', '-', '×', '÷', '='].includes(label);
-            const animatedBgStyle = useAnimatedStyle(() => ({
-              backgroundColor: interpolateColor(
-                themeValue.value,
-                [0, 1],
-                ['#f5f6fa', '#34495e']
-              ),
-            }));
             return (
               <NumPadButton
                 key={label}
@@ -75,7 +76,7 @@ export function NumPad({ buttons, onButtonPress, themeValue, theme }: NumPadProp
                 onPress={() => onButtonPress(label)}
                 backgroundColor={isOp ? '#2980b9' : undefined}
                 textColor={isOp ? '#fff' : (theme === 'dark' ? '#fff' : '#222f3e')}
-                animatedBgStyle={!isOp ? animatedBgStyle : undefined}
+                animatedBgStyle={!isOp ? numButtonBgStyle : undefined}
               />
             );
           })}

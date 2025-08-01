@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import Animated, { interpolateColor, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flexGrow: 1,
     padding: 16,
-    paddingBottom: 64,
+    // paddingBottom: 64,
+    marginTop: Platform.OS === 'ios' ? -64 : 0,
   },
 });
