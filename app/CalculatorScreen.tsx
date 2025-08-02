@@ -85,12 +85,12 @@ export default function CalculatorScreen() {
   return (
     <Animated.View style={[styles.background, animatedContainerStyle]}>
       <SafeAreaView style={{ flex: 1 }} edges={['top', 'bottom', 'left', 'right']}>
-        <Animated.View style={styles.calculatorBody}>
+        <Animated.ScrollView style={styles.calculatorBody}>
           <ThemeSwitch theme={theme} onToggle={() => dispatch({ type: 'TOGGLE_THEME' })} animatedTextStyle={animatedTextStyle} />
           <CalculatorDisplay previous={previous} operator={operator} current={current} animatedPrevTextStyle={animatedPrevTextStyle} animatedTextStyle={animatedTextStyle} />
           <CalculatorHistory history={history} onClear={clearHistory} animatedHistoryBlockStyle={animatedHistoryBlockStyle} animatedHistoryStyle={animatedHistoryStyle} animatedTextStyle={animatedTextStyle} theme={theme} />
           <NumPad buttons={BUTTONS} onButtonPress={handleButtonPress} themeValue={themeValue} theme={theme} />
-        </Animated.View>
+        </Animated.ScrollView>
       </SafeAreaView>
     </Animated.View>
   );
