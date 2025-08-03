@@ -2,13 +2,12 @@ import React, { useEffect } from 'react';
 import { Platform, StyleSheet } from 'react-native';
 import Animated, { interpolateColor, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useDispatch, useSelector } from 'react-redux';
 import { CalculatorDisplay } from '../components/calculator/CalculatorDisplay';
 import { CalculatorHistory } from '../components/calculator/CalculatorHistory';
 import { NumPad } from '../components/calculator/NumPad';
 import { ThemeSwitch } from '../components/calculator/ThemeSwitch';
 import { useCalculator } from '../hooks/useCalculator';
-import type { RootState } from '../store';
+import { useThemeStore } from '../store';
 
 
 const BUTTONS = [
@@ -32,8 +31,7 @@ export default function CalculatorScreen() {
     clearHistory,
   } = useCalculator();
 
-  const dispatch = useDispatch();
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const { theme, toggleTheme } = useThemeStore();
 
   const themeValue = useSharedValue(theme === 'dark' ? 1 : 0);
   useEffect(() => {
@@ -85,8 +83,13 @@ export default function CalculatorScreen() {
   return (
     <Animated.View style={[styles.background, animatedContainerStyle]}>
       <SafeAreaView style={{ flex: 1 }} edges={['top', 'bottom', 'left', 'right']}>
-        <Animated.ScrollView style={styles.calculatorBody}>
-          <ThemeSwitch theme={theme} onToggle={() => dispatch({ type: 'TOGGLE_THEME' })} animatedTextStyle={animatedTextStyle} />
+        <Animated.ScrollView 
+          style={styles.calculatorBody}
+          contentContainerStyle={styles.calculatorContent}
+          showsVerticalScrollIndicator={false}
+          nestedScrollEnabled
+        >
+          <ThemeSwitch theme={theme} onToggle={toggleTheme} animatedTextStyle={animatedTextStyle} />
           <CalculatorDisplay previous={previous} operator={operator} current={current} animatedPrevTextStyle={animatedPrevTextStyle} animatedTextStyle={animatedTextStyle} />
           <CalculatorHistory history={history} onClear={clearHistory} animatedHistoryBlockStyle={animatedHistoryBlockStyle} animatedHistoryStyle={animatedHistoryStyle} animatedTextStyle={animatedTextStyle} theme={theme} />
           <NumPad buttons={BUTTONS} onButtonPress={handleButtonPress} themeValue={themeValue} theme={theme} />
@@ -108,7 +111,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flexGrow: 1,
     padding: 16,
-    // paddingBottom: 64,
     marginTop: Platform.OS === 'ios' ? -64 : 0,
+  },
+  calculatorContent: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
   },
 });

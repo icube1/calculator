@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../store';
+import { useCalculatorStore } from '../store';
 
 export type Operator = '+' | '-' | '×' | '÷' | null;
 
@@ -8,8 +7,7 @@ export function useCalculator() {
   const [current, setCurrent] = useState('0');
   const [operator, setOperator] = useState<Operator>(null);
   const [previous, setPrevious] = useState<string | null>(null);
-  const dispatch = useDispatch();
-  const history = useSelector((state: RootState) => state.calculator.history);
+  const { history, addHistory, clearHistory } = useCalculatorStore();
 
   const input = (value: string) => {
     if (current.length > 12) return;
@@ -66,7 +64,7 @@ export function useCalculator() {
     setCurrent(resultStr);
     setOperator(null);
     setPrevious(null);
-    dispatch({ type: 'ADD_HISTORY', payload: `${previous} ${operator} ${current} = ${resultStr}` });
+    addHistory(`${previous} ${operator} ${current} = ${resultStr}`);
   };
 
   const del = () => {
@@ -77,8 +75,8 @@ export function useCalculator() {
     }
   };
 
-  const clearHistory = () => {
-    dispatch({ type: 'CLEAR_HISTORY' });
+  const clearHistoryAction = () => {
+    clearHistory();
   };
 
   return {
@@ -91,6 +89,6 @@ export function useCalculator() {
     equals,
     del,
     history,
-    clearHistory,
+    clearHistory: clearHistoryAction,
   };
 }

@@ -20,7 +20,7 @@ export function CalculatorHistory({ history, onClear, animatedHistoryBlockStyle,
           <Animated.Text style={[styles.clearHistoryText, animatedTextStyle]}>Clear</Animated.Text>
         </Pressable>
       </View>
-      <FlatList 
+      <FlatList
         data={history}
         renderItem={({item, index}) => (
           <Animated.Text
@@ -33,8 +33,10 @@ export function CalculatorHistory({ history, onClear, animatedHistoryBlockStyle,
             {item}
           </Animated.Text>
         )}
-        // contentContainerStyle={styles.historyList}
         style={styles.historyList}
+        showsVerticalScrollIndicator={false}
+        nestedScrollEnabled={true}
+        scrollEnabled={history.length > 3}
       />
     </Animated.View>
   );
